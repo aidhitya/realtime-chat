@@ -35,7 +35,8 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true
+    key: '7abb73c1109384a10807',
+    cluster: 'ap1',
+    encrypted: true,
 });
+require('./echo')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Events\ChatEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,9 +21,13 @@ class ChatController extends Controller
 
     public function store(Request $request)
     {
-        return Chat::create([
+        $chat = Chat::create([
             'subject' => $request->subject,
             'user_id' => Auth::id()
         ]);
+
+        broadcast(new ChatEvent($chat));
+
+        return $chat;
     }
 }
