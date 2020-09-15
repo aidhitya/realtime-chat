@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import Bus from "../../bus";
 export default {
   data() {
     return {
@@ -21,8 +22,13 @@ export default {
   },
   mounted() {
     axios
-      .get(`api/chat`)
+      .get(`chat/all`)
       .then((response) => [(this.chats = response.data), this.scrollBottom()]);
+
+    Bus.$on("sent-chat", (newPesan) => {
+      this.chats.push(newPesan);
+      this.scrollBottom();
+    });
   },
   methods: {
     scrollBottom() {
