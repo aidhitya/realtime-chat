@@ -1,41 +1,45 @@
 <template>
   <div class="chat-list">
-    <div class="messages">
+    <div class="messages" v-for="chat in chats">
       <div class="users">
-        Nama -
-        <span class="time">2020-09-10 12:01:21</span>
+        {{ chat.user.name }} -
+        <span class="time">{{ chat.created_at }}</span>
       </div>
       <div class="message">
-        <p>"Pesan"</p>
-      </div>
-    </div>
-    <div class="messages">
-      <div class="users">
-        Nama2 -
-        <span class="time">2020-09-10 12:01:21</span>
-      </div>
-      <div class="message">
-        <p>"Pesan2"</p>
-      </div>
-    </div>
-    <div class="messages">
-      <div class="users">
-        Nama3 -
-        <span class="time">2020-09-10 12:01:21</span>
-      </div>
-      <div class="message">
-        <p>"Pesan3"</p>
+        <p>"{{ chat.subject }}"</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      chats: [],
+    };
+  },
+  mounted() {
+    axios
+      .get(`api/chat`)
+      .then((response) => [(this.chats = response.data), this.scrollBottom()]);
+  },
+  methods: {
+    scrollBottom() {
+      setTimeout(function () {
+        var chatList = document.getElementsByClassName("chat-list")[0];
+        chatList.scrollTop = chatList.scrollHeight;
+      }, 1);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 .chat-list {
+  max-height: 300px;
+  overflow-y: auto;
+
   .messages {
     margin-top: 5px;
     .time {

@@ -1999,25 +1999,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      chats: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("api/chat").then(function (response) {
+      return [_this.chats = response.data, _this.scrollBottom()];
+    });
+  },
+  methods: {
+    scrollBottom: function scrollBottom() {
+      setTimeout(function () {
+        var chatList = document.getElementsByClassName("chat-list")[0];
+        chatList.scrollTop = chatList.scrollHeight;
+      }, 1);
+    }
+  }
+});
 
 /***/ }),
 
@@ -6476,7 +6479,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".chat-list .messages {\n  margin-top: 5px;\n}\n.chat-list .messages .time {\n  font-weight: 800;\n}\n.chat-list .messages .message {\n  font-size: 1.2rem;\n}", ""]);
+exports.push([module.i, ".chat-list {\n  max-height: 300px;\n  overflow-y: auto;\n}\n.chat-list .messages {\n  margin-top: 5px;\n}\n.chat-list .messages .time {\n  font-weight: 800;\n}\n.chat-list .messages .message {\n  font-size: 1.2rem;\n}", ""]);
 
 // exports
 
@@ -38380,43 +38383,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-list" }, [
-      _c("div", { staticClass: "messages" }, [
+  return _c(
+    "div",
+    { staticClass: "chat-list" },
+    _vm._l(_vm.chats, function(chat) {
+      return _c("div", { staticClass: "messages" }, [
         _c("div", { staticClass: "users" }, [
-          _vm._v("\n      Nama -\n      "),
-          _c("span", { staticClass: "time" }, [_vm._v("2020-09-10 12:01:21")])
+          _vm._v("\n      " + _vm._s(chat.user.name) + " -\n      "),
+          _c("span", { staticClass: "time" }, [_vm._v(_vm._s(chat.created_at))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "message" }, [_c("p", [_vm._v('"Pesan"')])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "messages" }, [
-        _c("div", { staticClass: "users" }, [
-          _vm._v("\n      Nama2 -\n      "),
-          _c("span", { staticClass: "time" }, [_vm._v("2020-09-10 12:01:21")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "message" }, [_c("p", [_vm._v('"Pesan2"')])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "messages" }, [
-        _c("div", { staticClass: "users" }, [
-          _vm._v("\n      Nama3 -\n      "),
-          _c("span", { staticClass: "time" }, [_vm._v("2020-09-10 12:01:21")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "message" }, [_c("p", [_vm._v('"Pesan3"')])])
+        _c("div", { staticClass: "message" }, [
+          _c("p", [_vm._v('"' + _vm._s(chat.subject) + '"')])
+        ])
       ])
-    ])
-  }
-]
+    }),
+    0
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
